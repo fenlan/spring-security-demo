@@ -18,7 +18,7 @@ import java.security.Principal;
 //
 //    @GetMapping("")
 //    public String index(Model model, Authentication auth) {
-//        model.addAttribute("username", auth.getName());
+//        model.addAttribute("username", auth.toString());
 //        return "index";
 //    }
 //
@@ -33,10 +33,10 @@ import java.security.Principal;
 public class HomeController {
 
     @GetMapping("")
-    public ResponseEntity<String> index(Authentication auth) {
+    public ResponseEntity<Authentication> index(Authentication auth) {
 
         HttpStatus status = HttpStatus.OK;
-        return new ResponseEntity<>(auth.getName(), status);
+        return new ResponseEntity<>(auth, status);
     }
 
     @GetMapping("login")
