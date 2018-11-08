@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "sys_user")
 public class SysUser implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
