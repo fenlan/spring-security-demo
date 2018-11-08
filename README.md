@@ -109,7 +109,7 @@ public class PersistentLogins {
 > This class can be used in the same way as `TokenBasedRememberMeServices`, but it additionally
 > needs to be configured with a `PersistentTokenRepository` to store the tokens. There are 
 > two standard implementations.
-> - `InMemoryTokenRepositoryImpl` which is intended for testing only(因为当用户量时，内存不够存储token).
+> - `InMemoryTokenRepositoryImpl` which is intended for testing only(当用户量大时，内存不够存储token).
 > - `JdbcTokenRepositoryImpl` which stores the tokens in a database.
 
 基于java config的例子
