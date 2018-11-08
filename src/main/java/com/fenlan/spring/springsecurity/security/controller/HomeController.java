@@ -4,6 +4,7 @@ import com.fenlan.spring.springsecurity.security.repository.SysRoleRepository;
 import com.fenlan.spring.springsecurity.security.repository.SysUserRepository;
 import com.fenlan.spring.springsecurity.security.role.SysRole;
 import com.fenlan.spring.springsecurity.security.role.SysUser;
+import com.fenlan.spring.springsecurity.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,7 @@ import java.util.Arrays;
 public class HomeController {
 
     @Autowired
-    SysRoleRepository roleRep;
-    @Autowired
-    SysUserRepository userRep;
+    UserService userService;
 
     @GetMapping("")
     public String index(Model model, Authentication auth) {
@@ -46,13 +45,7 @@ public class HomeController {
     public String register(@RequestParam("username") String username,
                            @RequestParam("password") String password,
                            Model model) {
-        SysUser newUser = new SysUser();
-        SysRole role = roleRep.findByName("ROLE_USER");
-        newUser.setUsername(username);
-        newUser.setPassword(new BCryptPasswordEncoder().encode(password));
-        newUser.setRoles(Arrays.asList(role));
-        userRep.save(newUser);
-        model.addAttribute("username", newUser);
+        model.addAttribute("username", userService.register(username, password));
         return "redirect:/";
     }
 }
