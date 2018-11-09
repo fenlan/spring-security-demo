@@ -17,13 +17,23 @@ public class UserService {
     @Autowired
     SysRoleRepository roleRepository;
 
-    public SysUser register(String username, String password) {
-        SysUser newUser = new SysUser();
-        SysRole role = roleRepository.findByName("ROLE_USER");
-        newUser.setUsername(username);
-        newUser.setPassword(new BCryptPasswordEncoder().encode(password));
-        newUser.setRoles(Arrays.asList(role));
-        userRepository.save(newUser);
-        return newUser;
+    public SysUser register(String username, String password) throws Exception {
+        if (null != userRepository.findByUsername(username))
+            throw new Exception("username exist!!!");
+        else {
+            SysUser newUser = new SysUser();
+            SysRole role = roleRepository.findByName("ROLE_USER");
+            newUser.setUsername(username);
+            newUser.setPassword(new BCryptPasswordEncoder().encode(password));
+            newUser.setRoles(Arrays.asList(role));
+            userRepository.save(newUser);
+            return newUser;
+        }
+    }
+
+    public void changePassword(String username, String password) {
+        SysUser user = userRepository.findByUsername(username);
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        userRepository.save(user);
     }
 }
